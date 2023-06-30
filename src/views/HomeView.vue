@@ -136,23 +136,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations("sales_order", ["SET_SALES_ORDER"]),
-    async getSalesOrder() {
-      await $axios
-        .get("/checker/sales-orders", {
-          headers: {
-            Authorization: `Bearer ${this.$store.getters["auth/Token"]}`,
-          },
-        })
-        .then(({ data }) => {
-          this.SET_SALES_ORDER(data.sales_orders);
-        })
-    },
-
-    logout() {
-      this.$store.dispatch("auth/logout");
-      this.$router.push("/login");
-    },
+    ...mapMutations("sales_order", ["SET_SALES_ORDER"])
   },
 
   computed: {
@@ -162,13 +146,6 @@ export default {
   created() {
     this.getSalesOrder();
   },
-  mounted() {
-    window.Echo.channel(`branch.${this.User.branch_id}`).listen('SalesOrderUpdated', () => {
-      this.snackbar = true;
-
-      this.getSalesOrder();
-    })
-  }
 };
 </script>
 <style>

@@ -52,21 +52,20 @@ export default {
   }),
 
   created() {
-    if (this.$store.getters["auth/Authenticated"]) {
+    if (this.$store.getters["auth/User"]) {
       this.$router.push("/home");
     }
   },
 
   methods: {
     ...mapActions("auth", ["submit"]),
-
     handleLogin() {
       this.btnLoading = true;
-      this.submit(this.form_login).then(() => {
-        if (this.$store.getters["auth/Authenticated"]) {
+      this.submit(this.form_login).then((res) => {
+        if (res.status) {
           this.$router.push("/home");
-          this.btnLoading = false;
         }
+        this.btnLoading = false;
       });
     },
   },

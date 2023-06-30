@@ -5,29 +5,20 @@
                 <v-btn icon @click.stop="drawer = !drawer">
                     <v-icon>mdi-menu</v-icon>
                 </v-btn>
-                <v-spacer></v-spacer>
-                <div class="tool_btns">
-                    <v-btn variant="text" append-icon="mdi-chevron-down">
-                        <h4><strong><span>USER</span></strong> </h4>
-                        <v-menu activator="parent">
-                            <v-list nav class="h_a_menu">
-                                <v-list-item title="Logout" prepend-icon="mdi-login" @click="logout()" />
-                            </v-list>
-                        </v-menu>
-                    </v-btn>
-                </div>
             </v-app-bar>
             <v-main>
+                <br>
+                <br>
                 <v-container>
                     <v-row>
                         <v-col class="mt-2" cols="2">
                             <v-card color="primary">
-                                <v-card-title class="font">Din In : {{ SalesOrder.dine_in_count }}</v-card-title>
+                                <v-card-title class="font">Din In : {{ count_dine_in }}</v-card-title>
                             </v-card>
                         </v-col>
                         <v-col class="mt-2" cols="2">
                             <v-card color="primary">
-                                <v-card-title class="font">Take Away : {{ SalesOrder.take_away_count }}</v-card-title>
+                                <v-card-title class="font">Take Away : {{ count_take_away }}</v-card-title>
                             </v-card>
                         </v-col>
                         <v-col class="mt-2 text-center" cols="4">
@@ -36,7 +27,7 @@
                         <v-col cols="1"></v-col>
                         <v-col class="mt-2" cols="3">
                             <v-card color="primary">
-                                <v-card-title class="font">Total Sales Order : {{ SalesOrder.all_count }}</v-card-title>
+                                <v-card-title class="font">Total Sales Order : {{ all_count }}</v-card-title>
                             </v-card>
                         </v-col>
                     </v-row>
@@ -87,15 +78,11 @@
                     <h3 class="text-center my-3">Remaining Orders</h3>
                     <v-divider></v-divider>
                     <div v-for="row in SalesOrderRemain">
-
                         <v-list density="compact" nav class="width:100%">
                             <v-list-item style="max-width: auto;font-family:sans-serif ;font-size: large;">
-                                {{ row.item_name }}
+                                {{ row.menuname }} ({{ row.jumlah }} Items)
                             </v-list-item>
                         </v-list>
-                        <v-chip class="ma-2" color="success" v-for="no_table in row.tables" :key="no_table">
-                            <!-- {{ no_table ? 'Table ' + no_table : 'Take Away' }} -->
-                        </v-chip>
                         <v-divider></v-divider>
                     </div>
                 </v-navigation-drawer>
@@ -133,6 +120,9 @@ export default {
             tab: null,
             drawer: false,
             snackbar: false,
+            count_dine_in: 0,
+            count_take_away: 0,
+            all_count: 0,
         };
     },
 
@@ -140,32 +130,25 @@ export default {
         ...mapMutations("sales_order", ["SET_SALES_ORDER"]),
         ...mapMutations("sales_order_remain", ["SET_SALES_ORDER_REMAIN"]),
         async getSalesOrder() {
+            this.loading = true;
             await $axios
-                .get("/checker/sales-orders", {
-                    headers: {
-                        Authorization: `Bearer ${this.$store.getters["auth/Token"]}`,
-                    },
+                .get("http://192.168.1.250:8081/apporder/api/allOrder", {
                 })
                 .then(({ data }) => {
-                    this.SET_SALES_ORDER(data.sales_orders);
-                })
-        },
-
-        async getSalesOrderRemain() {
-            await $axios
-                .get("/checker/remaining-orders", {
-                    headers: {
-                        Authorization: `Bearer ${this.$store.getters["auth/Token"]}`,
-                    },
-                })
-                .then(({ data }) => {
-                    this.SET_SALES_ORDER_REMAIN(data.sales_orders);
-                })
-        },
-
-        logout() {
-            this.$store.dispatch("auth/logout");
-            this.$router.push("/login");
+                    if (data.Dine_In != "Not Found") {
+                        this.count_dine_in = data.Dine_In.length;
+                    } else {
+                        this.count_dine_in = 0;
+                    }
+                    if (data.Take_Away != "Not Found") {
+                        this.count_take_away = data.Take_Away.length;
+                    } else {
+                        this.count_take_away = 0;
+                    }
+                    this.all_count = this.count_dine_in + this.count_take_away;
+                    this.SET_SALES_ORDER_REMAIN(data.Item);
+                    this.loading = false;
+                });
         },
     },
 
@@ -176,16 +159,7 @@ export default {
     },
     created() {
         this.getSalesOrder();
-        this.getSalesOrderRemain();
     },
-    mounted() {
-        window.Echo.channel(`branch.${this.User.branch_id}`).listen('SalesOrderUpdated', () => {
-            this.snackbar = true;
-
-            this.getSalesOrder();
-            this.getSalesOrderRemain();
-        })
-    }
 };
 </script>
 

@@ -11,9 +11,6 @@ const state = getDefaultState()
 
 //mutations
 const mutations = {
-    SET_TOKEN: (state, payload) => {
-        state.access_token = payload;
-    },
     SET_USER: (state, payload) => {
         state.user = payload;
     },
@@ -23,15 +20,6 @@ const mutations = {
 }
 
 const getters = {
-    Authenticated: state => {
-        return state.access_token != null && state.user != null;
-    },
-    AccessToken: state => {
-        return state.access_token;
-    },
-    Token: state => {
-        return state.access_token;
-    },
 
     User: state => {
         return state.user;
@@ -43,31 +31,25 @@ const getters = {
 }
 
 const actions = {
-    submit({ commit }, payload) {
-        return new Promise((resolve) => {
-            $axios.post('/checker/auth/login', payload)
-                .then(response => {
-                    if (response.data.status == 'success') {
-                        // console.log(response.data)
-                        commit('SET_TOKEN', response.data.token)
-                        commit('SET_USER', response.data.user)
-                    } else {
-                        alert('Login Failed')
-                    }
-                    resolve(response.data)
-
-                })
-                .catch(error => {
-                    if (error.response.status == 422) {
-                        alert('Login Failed')
-                    }
-                })
+    async submit({ commit }, payload)  {
+        const res = await fetch(`${import.meta.env.VITE_APP_API_URL}/apporder/Api/login`, {
+            method: 'POST',
+            body : JSON.stringify(payload),
         })
+
+        const data = await res.json()
+        if(!data.status) {
+           alert(data.message)
+        } else {
+            console.log('success',data)
+            commit('SET_USER', data)
+            return data
+        }
     },
+    
 
     logout({ commit }) {
         localStorage.removeItem('token')
-        commit('SET_TOKEN')
         commit('CELAR_STATE')
     },
 }

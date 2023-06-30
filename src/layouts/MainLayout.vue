@@ -8,9 +8,7 @@
 export default {
   name: "App",
   created() {
-    if (!this.$store.getters["auth/Authenticated"]) {
-      this.$router.push("/login");
-    }
+    this.$router.push("/home");
   },
 };
 </script>

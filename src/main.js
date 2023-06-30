@@ -21,7 +21,8 @@ window.Echo = new Echo({
     authEndpoint: import.meta.env.VITE_APP_API_URL + '/auth/profile',
     auth: {
         headers: {
-            Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjU3OjgxNjkvbW9iaWxlL2F1dGgvbG9naW4iLCJpYXQiOjE2NzgwNzMxMjQsImV4cCI6MTY3ODI4OTEyNCwibmJmIjoxNjc4MDczMTI0LCJqdGkiOiJ0REJtQzFoaUE2bERJbHdlIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.jmyooa418xwdzqMBHr6NinN9VtxWUWVUTuf2pt4cfvU',
+            "Cache-Control": null,
+            "X-Requested-With": null,
         }
     },
 

@@ -3,18 +3,18 @@ import store from '../store'
 const routes = [
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/home'
   },
 
   {
-    path: '/login',
-    name: 'login',
+    path: '/home',
+    name: 'home',
     meta: {
-      title: 'Login',
+      title: 'Home',
       icon: 'mdi-account',
       visible: true,
     },
-    component: () => import('../views/auth/Login.vue')
+    component: () => import('../views/Home.vue')
   },
 
   {
