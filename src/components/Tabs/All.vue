@@ -32,9 +32,6 @@
                   <v-col class="text-center" lg="12">
                     <h3 class="ma-2 font_card">{{ row.tblname ?? 'Dine In' }}
                     </h3>
-                    <span>{{
-                      row.ConfirmTime
-                    }}</span>
                   </v-col>
                 </v-row>
               </v-card>
@@ -85,7 +82,7 @@
         <v-row no-gutter>
           <v-col xs="12" sm="12" md="4" lg="4">
             <v-card-title class="font_card" v-if="this.status != 'complete'">
-              Total Menunggu: {{ totalWaktu }}
+              <!-- Total Menunggu: {{ totalWaktu }} -->
             </v-card-title>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-center">
@@ -289,6 +286,8 @@ export default {
 
   created() {
     this.getSalesOrder();
+    this.countDownTimer();
+
   },
 
   methods: {
@@ -408,6 +407,12 @@ export default {
         this.totalWaktu = `${jam}:${menit}:${detik}`;
       }, 1000);
     },
+
+    countDownTimer() {
+      setInterval(() => {
+        this.getSalesOrder()
+      }, 10_000)
+    },
   },
 
 
@@ -425,7 +430,7 @@ export default {
   font-family: Arial, sans-serif;
 }
 
-.centered-input>>>input {
+.centered-inputinput {
   text-align: center
 }
 

@@ -27,7 +27,7 @@
                 </v-row>
                 <v-row>
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">{{ row.CustName ?? 'Take Away' }}</h3>
+                    <h3 class="ma-2 font_card">{{ 'Take Away' }}</h3>
                   </v-col>
                 </v-row>
               </v-card>

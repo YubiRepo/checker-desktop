@@ -219,10 +219,17 @@ export default {
     };
   },
 
+  mounted() {
+    setInterval(() => {
+      this.getSalesOrder()
+    }, 10000)
+  },
+
   created() {
     this.getSalesOrder();
     this.countDownTimer();
   },
+
   methods: {
     ...mapMutations("sales_order", ["SET_SALES_ORDER"]),
     async update() {
