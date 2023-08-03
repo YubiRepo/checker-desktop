@@ -25,6 +25,7 @@
     "vue-router": "^4.1.6",
     "vue-sse": "^2.5.2",
     "vue-sweetalert2": "^5.0.5",
+    "vue-timer-hook": "^1.0.84",
     "vuetify": "^3.1.5",
     "vuetify-snackbars": "^1.0.12",
     "vuex": "^4.0.2",

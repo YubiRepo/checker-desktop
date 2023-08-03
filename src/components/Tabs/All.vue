@@ -9,7 +9,8 @@
         </v-row>
         <v-form ref="form_data">
           <v-row class="mt-3">
-            <v-col v-for="row in SalesOrder.Dine_In" cols="2" :key="row.id" v-if="SalesOrder.Dine_In != 'Not Found'">
+            <v-col v-for="(row, index) in SalesOrder.Dine_In" cols="2" :key="row.id"
+              v-if="SalesOrder.Dine_In != 'Not Found'">
               <v-card height="100%" :color="row.statusorder == 'complete' ? 'green' : 'yellow'" class="pa-3"
                 @click="getSalesOrderDetail(row.salesseq)">
                 <v-row class="flex mx-auto">
@@ -29,7 +30,11 @@
                 </v-row>
                 <v-row>
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">{{ row.tblname ?? 'Dine In' }}</h3>
+                    <h3 class="ma-2 font_card">{{ row.tblname ?? 'Dine In' }}
+                    </h3>
+                    <span>{{
+                      row.ConfirmTime
+                    }}</span>
                   </v-col>
                 </v-row>
               </v-card>
@@ -66,7 +71,7 @@
                 </v-row>
                 <v-row>
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">{{ row.CustName ?? 'Take Away' }}</h3>
+                    <h3 class="ma-2 font_card">{{ 'Take Away' }}</h3>
                   </v-col>
                 </v-row>
               </v-card>
@@ -75,15 +80,17 @@
         </v-form>
       </v-responsive>
     </v-main>
-
-    <v-dialog v-model="dialog" v-if="dialog" hide-overlay width="60%">
+    <v-dialog v-model="dialog" v-if="dialog" hide-overlay width="1300" persist>
       <v-card>
         <v-row no-gutter>
           <v-col xs="12" sm="12" md="4" lg="4">
+            <v-card-title class="font_card" v-if="this.status != 'complete'">
+              Total Menunggu: {{ totalWaktu }}
+            </v-card-title>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-center">
             <v-card-title class="font_card">
-              Summary
+              Summary <br />
             </v-card-title>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-right">
@@ -154,7 +161,7 @@
         <v-card-text>
           <v-row>
             <v-col cols="12">
-              <v-table>
+              <v-table class="table">
                 <thead style="background-color:#4B81FF">
                   <tr>
                     <th style="color: white">#</th>
@@ -167,14 +174,23 @@
                 </thead>
                 <tbody>
                   <tr v-for="(items, index) in detail" :key="index">
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ items.menuname }}</td>
-                    <td>{{ items.qty }}</td>
-                    <td>
+                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9; ">{{
+                      index +
+                      1 }}
+                    </td>
+                    <td v-else>{{ index + 1 }}</td>
+                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">{{
+                      items.menuname }}</td>
+                    <td v-else>{{ items.menuname }}</td>
+                    <td class="text-center" v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">{{
+                      items.qty }}
+                    </td>
+                    <td v-else class="text-center">{{ items.qty }}</td>
+                    <td class="text-center" v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
                       <div class="d-flex align-left flex-column pa-6">
                         <v-btn-toggle>
                           <v-btn type="button" icon="mdi-minus" @click="reduceQuantity(index)"></v-btn>
-                          <v-text-field type="number" v-model="items.qtyready"
+                          <v-text-field class="centered-input text--darken-3" type="number" v-model="items.qtyready"
                             @change="calculateQty(index)"></v-text-field>
                           <v-btn type="button" icon="mdi-plus" @click="addQuantity(index)"></v-btn>
                           <v-btn type="button" variant="flat" style="background-color:#BBDEFB;"
@@ -182,18 +198,50 @@
                         </v-btn-toggle>
                       </div>
                     </td>
-                    <td>
+                    <td v-else>
                       <div class="d-flex align-left flex-column pa-6">
                         <v-btn-toggle>
-                          <v-text-field type="number" v-model="items.balance" readonly></v-text-field>
+                          <v-btn type="button" icon="mdi-minus" @click="reduceQuantity(index)"></v-btn>
+                          <v-text-field type="text" class="centered-input text--darken-3" v-model="items.qtyready"
+                            v-if="items.qty == items.qtyready" @change="calculateQty(index)" readonly></v-text-field>
+                          <v-text-field class="centered-input text--darken-3" type="text" v-model="items.qtyready" v-else
+                            @change="calculateQty(index)" readonly></v-text-field>
+                          <v-btn type="button" icon="mdi-plus" @click="addQuantity(index)"></v-btn>
+                          <v-btn type="button" variant="flat" style="background-color:#BBDEFB;"
+                            @click="check(index)"><v-icon>mdi-check-outline</v-icon></v-btn>
                         </v-btn-toggle>
                       </div>
                     </td>
-                    <td class="text-center">
-                      <v-chip color="green" class="ma-2" v-if="items.qty == items.qtyready">
+                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
+                      <div class="d-flex align-left flex-column pa-6">
+                        <v-btn-toggle>
+                          <v-text-field type="number" v-model="items.balance" class="centered-input text--darken-3 mt-3"
+                            readonly></v-text-field>
+                        </v-btn-toggle>
+                      </div>
+                    </td>
+                    <td v-else>
+                      <div class="d-flex align-left flex-column pa-6">
+                        <v-btn-toggle>
+                          <v-text-field type="number" v-model="items.balance" class="centered-input text--darken-3"
+                            readonly></v-text-field>
+                        </v-btn-toggle>
+                      </div>
+                    </td>
+                    <td class="text-center" v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
+                      <v-chip class="ma-2" v-if="items.qty == items.qtyready" color="white"
+                        style="background-color: green;">
                         DONE
                       </v-chip>
-                      <v-chip color="black" class="ma-2" text-color="black" v-else>
+                      <v-chip class="ma-2" v-else color="yellow">
+                        NOT DONE
+                      </v-chip>
+                    </td>
+                    <td class="text-center" v-else>
+                      <v-chip class="ma-2" v-if="items.qty == items.qtyready">
+                        DONE
+                      </v-chip>
+                      <v-chip class="ma-2" v-else color="black" style="background-color: yellow;">
                         NOT DONE
                       </v-chip>
                     </td>
@@ -215,6 +263,7 @@
 import $axios from "@/plugins/api.js";
 import MainLayout from "../../layouts/MainLayout.vue";
 import { mapGetters, mapMutations } from "vuex";
+import { useTime } from "vue-timer-hook";
 export default {
   name: "All",
   data() {
@@ -222,16 +271,26 @@ export default {
       loading: false,
       dialog: false,
       header: [],
+      time: '00:00:00',
       detail: [],
       detailorder: [],
       balance: 0,
       form_data: [],
       no_table: "",
+      totalWaktu: "",
+      status: "",
     };
   },
+  setup() {
+    const format = '12 hours'
+    const time = useTime(format)
+    return { time, }
+  },
+
   created() {
     this.getSalesOrder();
   },
+
   methods: {
     ...mapMutations("sales_order", ["SET_SALES_ORDER"]),
     async update() {
@@ -244,7 +303,6 @@ export default {
           qtyready: item.qtyready,
         };
       });
-      // console.log();
       const res = await fetch("http://192.168.1.250:8081/apporder/api/updatecheckerall", {
         method: "POST",
         body: JSON.stringify({ "detailorder": this.detail }),
@@ -269,6 +327,7 @@ export default {
     },
 
     async getSalesOrderDetail(salesseq) {
+      this.totalWaktu = "Loading..."
       this.loading = true;
       this.dialog = true;
       await $axios
@@ -278,6 +337,7 @@ export default {
           this.header = data.Order[0];
           this.detail = data.Order[0].data;
           this.detailorder = data.Order[0].data;
+          this.status = data.Order[0].statusorder;
           this.detail.map((item) => {
             Object.assign(item, {
               qtyready: item.qtyready,
@@ -286,7 +346,13 @@ export default {
             item.qtyready = item.qtyready;
           });
           this.loading = false;
-
+          if (this.dialog == true) {
+            this.totalWaktu = "Loading..."
+            this.hitungTotalWaktu(data.Order[0].ConfirmTime);
+          } else {
+            this.totalWaktu = "Loading..."
+            this.dialog = false;
+          }
         });
     },
 
@@ -324,6 +390,24 @@ export default {
       }
       this.detail[index].balance = this.detail[index].qty - this.detail[index].qtyready;
     },
+
+    hitungTotalWaktu(waktuDiaOrder) {
+      this.totalWaktu = 'Loading...'
+      const [jamDiberikan, menitDiberikan, detikDiberikan] = waktuDiaOrder.split(':');
+      const waktuDiberikanObj = new Date();
+      waktuDiberikanObj.setHours(jamDiberikan);
+      waktuDiberikanObj.setMinutes(menitDiberikan);
+      waktuDiberikanObj.setSeconds(detikDiberikan);
+
+      setInterval(() => {
+        const waktuSekarang = new Date();
+        const perbedaanWaktu = waktuSekarang - waktuDiberikanObj;
+        const detik = Math.floor(perbedaanWaktu / 1000) % 60 % 60 % 60 % 60;
+        const menit = Math.floor(perbedaanWaktu / (1000 * 60)) % 60;
+        const jam = Math.floor(perbedaanWaktu / (1000 * 60 * 60));
+        this.totalWaktu = `${jam}:${menit}:${detik}`;
+      }, 1000);
+    },
   },
 
 
@@ -336,9 +420,13 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .font {
   font-family: Arial, sans-serif;
+}
+
+.centered-input>>>input {
+  text-align: center
 }
 
 .font_size {
@@ -357,5 +445,9 @@ export default {
   font-size: 47px;
   font-family: Arial, sans-serif;
   color: #000000;
+}
+
+.table {
+  width: 100%;
 }
 </style>

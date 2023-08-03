@@ -1,14 +1,12 @@
 <template>
     <v-card>
         <main-layout>
-            <v-app-bar title="">
+            <v-app-bar color="primary">
                 <v-btn icon @click.stop="drawer = !drawer">
                     <v-icon>mdi-menu</v-icon>
                 </v-btn>
             </v-app-bar>
             <v-main>
-                <br>
-                <br>
                 <v-container>
                     <v-row>
                         <v-col class="mt-2" cols="2">
@@ -24,8 +22,13 @@
                         <v-col class="mt-2 text-center" cols="4">
                             <v-card-title class="font_size"><b>Order List</b></v-card-title>
                         </v-col>
-                        <v-col cols="1"></v-col>
-                        <v-col class="mt-2" cols="3">
+                        <v-col class="mt-2 " cols="2">
+                            <v-card color="primary" @click.stop="toGrid()">
+                                <v-card-title class="font"><v-icon>mdi-grid</v-icon>&nbsp;Grid
+                                    View</v-card-title>
+                            </v-card>
+                        </v-col>
+                        <v-col class="mt-2" cols="2">
                             <v-card color="primary">
                                 <v-card-title class="font">Total Sales Order : {{ all_count }}</v-card-title>
                             </v-card>
@@ -77,7 +80,7 @@
                 <v-navigation-drawer v-model="drawer" temporary location="right" :width="400">
                     <h3 class="text-center my-3">Remaining Orders</h3>
                     <v-divider></v-divider>
-                    <div v-for="row in SalesOrderRemain">
+                    <div v-for="row in SalesOrderRemain" v-if="SalesOrderRemain != 'Not Found'">
                         <v-list density="compact" nav class="width:100%">
                             <v-list-item style="max-width: auto;font-family:sans-serif ;font-size: large;">
                                 {{ row.menuname }} ({{ row.jumlah }} Items)
@@ -115,6 +118,7 @@ export default {
         TabDineIn,
         TabTakeAway,
     },
+
     data() {
         return {
             tab: null,
@@ -124,6 +128,10 @@ export default {
             count_take_away: 0,
             all_count: 0,
         };
+    },
+
+    created() {
+        this.getSalesOrder();
     },
 
     methods: {
@@ -149,16 +157,17 @@ export default {
                     this.SET_SALES_ORDER_REMAIN(data.Item);
                     this.loading = false;
                 });
+
+        },
+
+        toGrid() {
+            this.$router.push({ path: '/grid' })
         },
     },
 
     computed: {
         ...mapGetters("sales_order", ["SalesOrder"]),
         ...mapGetters("sales_order_remain", ["SalesOrderRemain"]),
-        ...mapGetters("auth", ["User"]),
-    },
-    created() {
-        this.getSalesOrder();
     },
 };
 </script>

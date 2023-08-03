@@ -134,10 +134,17 @@
                 </thead>
                 <tbody>
                   <tr v-for="(items, index) in detail" :key="index">
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ items.menuname }}</td>
-                    <td>{{ items.qty }}</td>
-                    <td>
+                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9; ">{{
+                      index +
+                      1 }}
+                    </td>
+                    <td v-else>{{ index + 1 }}</td>
+                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">{{ items.menuname }}</td>
+                    <td v-else>{{ items.menuname }}</td>
+                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">{{ items.qty }}
+                    </td>
+                    <td v-else>{{ items.qty }}</td>
+                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
                       <div class="d-flex align-left flex-column pa-6">
                         <v-btn-toggle>
                           <v-btn type="button" icon="mdi-minus" @click="reduceQuantity(index)"></v-btn>
@@ -149,18 +156,47 @@
                         </v-btn-toggle>
                       </div>
                     </td>
-                    <td>
+                    <td v-else>
+                      <div class="d-flex align-left flex-column pa-6">
+                        <v-btn-toggle>
+                          <v-btn type="button" icon="mdi-minus" @click="reduceQuantity(index)"></v-btn>
+                          <v-text-field type="text" v-model="items.qtyready" v-if="items.qty == items.qtyready"
+                            @change="calculateQty(index)" readonly></v-text-field>
+                          <v-text-field type="text" v-model="items.qtyready" v-else @change="calculateQty(index)"
+                            readonly></v-text-field>
+                          <v-btn type="button" icon="mdi-plus" @click="addQuantity(index)"></v-btn>
+                          <v-btn type="button" variant="flat" style="background-color:#BBDEFB;"
+                            @click="check(index)"><v-icon>mdi-check-outline</v-icon></v-btn>
+                        </v-btn-toggle>
+                      </div>
+                    </td>
+                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
                       <div class="d-flex align-left flex-column pa-6">
                         <v-btn-toggle>
                           <v-text-field type="number" v-model="items.balance" readonly></v-text-field>
                         </v-btn-toggle>
                       </div>
                     </td>
-                    <td class="text-center">
-                      <v-chip color="green" class="ma-2" v-if="items.qty == items.qtyready">
+                    <td v-else>
+                      <div class="d-flex align-left flex-column pa-6">
+                        <v-btn-toggle>
+                          <v-text-field type="number" v-model="items.balance" readonly></v-text-field>
+                        </v-btn-toggle>
+                      </div>
+                    </td>
+                    <td class="text-center" v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
+                      <v-chip class="ma-2" v-if="items.qty == items.qtyready">
                         DONE
                       </v-chip>
-                      <v-chip color="black" class="ma-2" text-color="black" v-else>
+                      <v-chip class="ma-2" v-else>
+                        NOT DONE
+                      </v-chip>
+                    </td>
+                    <td class="text-center" v-else>
+                      <v-chip class="ma-2" v-if="items.qty == items.qtyready">
+                        DONE
+                      </v-chip>
+                      <v-chip class="ma-2" v-else>
                         NOT DONE
                       </v-chip>
                     </td>
@@ -201,6 +237,7 @@ export default {
 
   created() {
     this.getSalesOrder();
+    this.countDownTimer();
   },
 
   methods: {
@@ -294,6 +331,12 @@ export default {
         return;
       }
       this.detail[index].balance = this.detail[index].qty - this.detail[index].qtyready;
+    },
+
+    countDownTimer() {
+      setInterval(() => {
+        this.getSalesOrder()
+      }, 10000)
     },
   },
 

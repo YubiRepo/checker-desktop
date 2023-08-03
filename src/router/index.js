@@ -18,6 +18,17 @@ const routes = [
   },
 
   {
+    path: '/grid',
+    name: 'grid',
+    meta: {
+      title: 'Grid',
+      icon: 'mdi-grid',
+      visible: true,
+  },
+    component: () => import('../views/GridView.vue')
+  },
+
+  {
     path: '/',
     name: 'home',
     meta: {
