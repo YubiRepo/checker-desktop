@@ -9,6 +9,11 @@
             <v-main>
                 <v-container>
                     <v-row>
+                        <v-col cols="12">
+                            <v-btn color="primary" @click="getSalesOrderRefresh()">Refresh</v-btn>
+                        </v-col>
+                    </v-row>
+                    <v-row>
                         <v-col class="mt-2" xs="12" sm="12" md="6" lg="6"
                             v-for="(items, indexHeader) in GridSalesOrder.Dine_In"
                             v-if="GridSalesOrder.Dine_In != 'Not Found'" :key="indexHeader">
@@ -341,14 +346,12 @@ export default {
 
     created() {
         this.getSalesOrder();
-        this.countDownTimer();
     },
 
     methods: {
         ...mapMutations("grid_sales_order", ["SET_GRID_SALES_ORDER"]),
         ...mapMutations("sales_order_remain", ["SET_SALES_ORDER_REMAIN"]),
         async update(indexHeader, type = "Dine_In") {
-            console.log(type);
             let salesHeader = [];
             let salesDetail = [];
             if (type == "Dine_In") {
@@ -483,15 +486,14 @@ export default {
             this.GridSalesOrder.Take_Away[indexHeader].data[indexDetail].balance = 0;
         },
 
+        async getSalesOrderRefresh() {
+            this.getSalesOrder();
+        },
+
         back() {
             this.$router.push({ path: '/' })
         },
 
-        countDownTimer() {
-            setInterval(() => {
-                this.getSalesOrder()
-            }, 10000)
-        },
     },
 
     computed: {
