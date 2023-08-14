@@ -5,14 +5,15 @@
                 <v-btn icon @click.stop="back()">
                     <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
+                <v-row>
+                    <v-col cols="12">
+                        <v-btn color="white" variant="tonal" @click="getSalesOrderRefresh()"
+                            class="float-end mx-2">Refresh</v-btn>
+                    </v-col>
+                </v-row>
             </v-app-bar>
             <v-main>
                 <v-container>
-                    <v-row>
-                        <v-col cols="12">
-                            <v-btn color="primary" @click="getSalesOrderRefresh()">Refresh</v-btn>
-                        </v-col>
-                    </v-row>
                     <v-row>
                         <v-col class="mt-2" xs="12" sm="12" md="6" lg="6"
                             v-for="(items, indexHeader) in GridSalesOrder.Dine_In"
