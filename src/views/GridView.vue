@@ -56,8 +56,8 @@
                                                     <th style="color: white" width="1%">#</th>
                                                     <th style="color: white" width="25%">Item Name</th>
                                                     <th style="color: white" width="1%">Order</th>
-                                                    <th style="color: white" width="40%" class="text-center">Qty Out</th>
-                                                    <th style="color: white" width="20%" class="text-center">Balance</th>
+                                                    <th style="color: white" width="45%" class="text-center">Qty Out</th>
+                                                    <th style="color: white" width="15%" class="text-center">Balance</th>
                                                     <th style="color: white" width="5%" class="text-center">Status</th>
                                                 </tr>
                                             </thead>
