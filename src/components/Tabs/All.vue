@@ -286,7 +286,7 @@ export default {
 
   created() {
     this.getSalesOrder();
-    // this.countDownTimer();
+    this.countDownTimer();
 
   },
 
@@ -408,11 +408,11 @@ export default {
       }, 1000);
     },
 
-    // countDownTimer() {
-    //   setInterval(() => {
-    //     this.getSalesOrder()
-    //   }, 10_000)
-    // },
+    countDownTimer() {
+      setInterval(() => {
+        this.getSalesOrder()
+      }, 10_000)
+    },
   },
 
 

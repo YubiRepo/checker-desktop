@@ -345,7 +345,7 @@ export default {
     },
 
     created() {
-        this.getSalesOrder();
+        this.getSalesOrders();
     },
 
     methods: {
@@ -378,12 +378,12 @@ export default {
                 .then((res) => {
                     this.loading = false;
                     this.dialog = false;
-                    this.getSalesOrder();
+                    this.getSalesOrders();
                     this.snackbar = true;
                 });
         },
 
-        async getSalesOrder() {
+        async getSalesOrders() {
             this.loading = true;
             await $axios
                 .get("http://192.168.1.250:8081/apporder/api/allOrder", {
@@ -487,7 +487,7 @@ export default {
         },
 
         async getSalesOrderRefresh() {
-            this.getSalesOrder();
+            this.getSalesOrders();
         },
 
         back() {
