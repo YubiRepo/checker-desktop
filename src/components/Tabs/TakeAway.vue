@@ -70,7 +70,7 @@
               <v-row>
                 <v-col class="text-center" lg="12">
                   <h3 class="ma-3 font_number">{{
-                    this.detail.reduce((acc, item) => acc + item.qtyready, 0)
+                    this.detailItem.reduce((acc, item) => acc + item.qtyready, 0)
                   }}</h3>
                 </v-col>
               </v-row>
@@ -87,7 +87,7 @@
               <v-row>
                 <v-col class="text-center" lg="12">
                   <h3 class="ma-3 font_number">{{
-                    this.detail.reduce((acc, item) => acc + item.qty, 0) - this.detail.reduce((acc, item) => acc +
+                    this.detailItem.reduce((acc, item) => acc + item.qty, 0) - this.detailItem.reduce((acc, item) => acc +
                       item.qtyready, 0)
                   }}</h3>
                 </v-col>
@@ -229,6 +229,7 @@ export default {
       header: [],
       detail: [],
       detailorder: [],
+      detailItem: [],
       on_process: 0,
       form_data: [],
       snackbar: false,
@@ -286,6 +287,7 @@ export default {
           this.header = data.Order[0];
           this.detail = data.Order[0].data;
           this.detailorder = data.Order[0].data;
+          this.detailItem = data.Order[0].data;
           this.detail.map((item) => {
             Object.assign(item, {
               qtyready: item.qtyready,
