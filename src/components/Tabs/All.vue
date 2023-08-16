@@ -15,7 +15,7 @@
                 @click="getSalesOrderDetail(row.salesseq)">
                 <v-row class="flex mx-auto">
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">{{ row.tblname ?? 'Dine In' }}</h3>
+                    <h2 class="ma-2 font_card">{{ row.tblname ?? 'Dine In' }}</h2>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -32,7 +32,7 @@
                 </v-row>
                 <v-row>
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">Order No. {{ row.salesseq }}
+                    <h3 class="ma-2">Order No. {{ row.salesseq }}
                     </h3>
                   </v-col>
                 </v-row>
@@ -55,7 +55,7 @@
                 @click="getSalesOrderDetail(row.salesseq)">
                 <v-row class="flex mx-auto">
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">{{ 'Take Away' }}</h3>
+                    <h3 class="ma-2 font_card">{{ 'Take Away' }} ({{ row.salesseq }})</h3>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -72,7 +72,7 @@
                 </v-row>
                 <v-row>
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">Order No. {{ row.salesseq }}
+                    <h3 class="ma-2">Order No. {{ row.salesseq }}
                     </h3>
                   </v-col>
                 </v-row>
@@ -86,14 +86,13 @@
       <v-card>
         <v-row no-gutter>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-left">
+          </v-col>
+          <v-col xs="12" sm="12" md="4" lg="4" class="text-center">
             <v-card-title class="font_card">
               <h3>
                 {{ this.header.tblname ?? 'Take Away' }}
               </h3>
             </v-card-title>
-          </v-col>
-          <v-col xs="12" sm="12" md="4" lg="4" class="text-center">
-
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-right">
             <v-card-actions>
@@ -123,6 +122,23 @@
             </v-card>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="3">
+            <v-card height="100%" color="green" class="pa-3">
+              <v-row>
+                <v-col class="text-center" lg="12">
+                  <h3 class="ma-3 font_number">{{
+                    this.detailItem.reduce((acc, item) => acc + item.qtyready, 0)
+                  }}</h3>
+                </v-col>
+              </v-row>
+              <v-divider :thickness="2"></v-divider>
+              <v-row>
+                <v-col class="text-center" lg="12">
+                  <h3 class="ma-2 font_card">Done</h3>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-col>
+          <v-col xs="12" sm="12" md="4" lg="3">
             <v-card height="100%" color="yellow" class="pa-3">
               <v-row>
                 <v-col class="text-center" lg="12">
@@ -137,23 +153,6 @@
               <v-row>
                 <v-col class="text-center" lg="12">
                   <h3 class="ma-2 font_card">Not Done</h3>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-          <v-col xs="12" sm="12" md="4" lg="3">
-            <v-card height="100%" color="green" class="pa-3">
-              <v-row>
-                <v-col class="text-center" lg="12">
-                  <h3 class="ma-3 font_number">{{
-                    this.detailItem.reduce((acc, item) => acc + item.qtyready, 0)
-                  }}</h3>
-                </v-col>
-              </v-row>
-              <v-divider :thickness="2"></v-divider>
-              <v-row>
-                <v-col class="text-center" lg="12">
-                  <h3 class="ma-2 font_card">Done</h3>
                 </v-col>
               </v-row>
             </v-card>
@@ -427,7 +426,7 @@ export default {
 }
 
 .font_card {
-  font-size: 20px;
+  font-size: 23px;
   font-family: Arial, sans-serif;
   color: #000000;
 }

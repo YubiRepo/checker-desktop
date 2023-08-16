@@ -25,7 +25,7 @@
               </v-row>
               <v-row>
                 <v-col class="text-center" lg="12">
-                  <h3 class="ma-2 font_card">Order No. {{ row.salesseq }}
+                  <h3 class="ma-2">Order No. {{ row.salesseq }}
                   </h3>
                 </v-col>
               </v-row>
@@ -72,6 +72,21 @@
             </v-card>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="3">
+            <v-card height="100%" color="black" class="pa-3">
+              <v-row>
+                <v-col class="text-center" lg="12">
+                  <h3 class="ma-3 font_number" style="color:white"> {{ detail.length }}</h3>
+                </v-col>
+              </v-row>
+              <v-divider :thickness="3" color="white"></v-divider>
+              <v-row>
+                <v-col class="text-center" lg="12">
+                  <h3 class="ma-2 font_card" style="color:white">Items</h3>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-col>
+          <v-col xs="12" sm="12" md="4" lg="3">
             <v-card height="100%" color="yellow" class="pa-3">
               <v-row>
                 <v-col class="text-center" lg="12">
@@ -85,21 +100,6 @@
               <v-row>
                 <v-col class="text-center" lg="12">
                   <h3 class="ma-2 font_card">Not Done</h3>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-          <v-col xs="12" sm="12" md="4" lg="3">
-            <v-card height="100%" color="black" class="pa-3">
-              <v-row>
-                <v-col class="text-center" lg="12">
-                  <h3 class="ma-3 font_number" style="color:white"> {{ detail.length }}</h3>
-                </v-col>
-              </v-row>
-              <v-divider :thickness="3" color="white"></v-divider>
-              <v-row>
-                <v-col class="text-center" lg="12">
-                  <h3 class="ma-2 font_card" style="color:white">Items</h3>
                 </v-col>
               </v-row>
             </v-card>
@@ -357,7 +357,7 @@ export default {
 }
 
 .font_card {
-  font-size: 20px;
+  font-size: 23px;
   font-family: Arial, sans-serif;
   color: #000000;
 }
