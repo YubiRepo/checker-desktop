@@ -30,7 +30,7 @@
                         </v-col>
                         <v-col class="mt-2" cols="2">
                             <v-card color="primary">
-                                <v-card-title class="font">Total Sales Order : {{ all_count }}</v-card-title>
+                                <v-card-title class="font">Total Order : {{ all_count }}</v-card-title>
                             </v-card>
                         </v-col>
                     </v-row>

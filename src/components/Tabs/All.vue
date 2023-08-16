@@ -15,12 +15,14 @@
                 @click="getSalesOrderDetail(row.salesseq)">
                 <v-row class="flex mx-auto">
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">Order No</h3>
+                    <h3 class="ma-2 font_card">{{ row.tblname ?? 'Dine In' }}</h3>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_number"> {{ row.salesseq }}</h3>
+                    <h3>
+                      {{ row.lama }}
+                    </h3>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -30,7 +32,7 @@
                 </v-row>
                 <v-row>
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">{{ row.tblname ?? 'Dine In' }}
+                    <h3 class="ma-2 font_card">Order No. {{ row.salesseq }}
                     </h3>
                   </v-col>
                 </v-row>
@@ -53,12 +55,14 @@
                 @click="getSalesOrderDetail(row.salesseq)">
                 <v-row class="flex mx-auto">
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">Order No</h3>
+                    <h3 class="ma-2 font_card">{{ 'Take Away' }}</h3>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_number"> {{ row.salesseq }}</h3>
+                    <h3>
+                      {{ row.lama }}
+                    </h3>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -68,7 +72,8 @@
                 </v-row>
                 <v-row>
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">{{ 'Take Away' }}</h3>
+                    <h3 class="ma-2 font_card">Order No. {{ row.salesseq }}
+                    </h3>
                   </v-col>
                 </v-row>
               </v-card>
@@ -80,15 +85,19 @@
     <v-dialog v-model="dialog" v-if="dialog" hide-overlay width="1300" persist>
       <v-card>
         <v-row no-gutter>
-          <v-col xs="12" sm="12" md="4" lg="4">
+          <!-- <v-col xs="12" sm="12" md="4" lg="4">
             <v-card-title class="font_card" v-if="this.status != 'complete'">
-              <!-- Total Menunggu: {{ totalWaktu }} -->
+            </v-card-title>
+          </v-col> -->
+          <v-col xs="12" sm="12" md="4" lg="4" class="text-left">
+            <v-card-title class="font_card">
+              <h3>
+                {{ this.header.tblname ?? 'Dine In' }}
+              </h3>
             </v-card-title>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-center">
-            <v-card-title class="font_card">
-              Summary <br />
-            </v-card-title>
+
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-right">
             <v-card-actions>
@@ -103,18 +112,16 @@
         <br>
         <v-row no-gutter style="justify-content: center;">
           <v-col xs="12" sm="12" md="4" lg="3">
-            <v-card height="100%" color="green" class="pa-3">
+            <v-card height="100%" color="black" class="pa-3">
               <v-row>
                 <v-col class="text-center" lg="12">
-                  <h3 class="ma-3 font_number">{{
-                    this.detailItem.reduce((acc, item) => acc + item.qtyready, 0)
-                  }}</h3>
+                  <h3 class="ma-3 font_number" style="color:white"> {{ detailItem.length }}</h3>
                 </v-col>
               </v-row>
-              <v-divider :thickness="2"></v-divider>
+              <v-divider :thickness="3" color="white"></v-divider>
               <v-row>
                 <v-col class="text-center" lg="12">
-                  <h3 class="ma-2 font_card">Done</h3>
+                  <h3 class="ma-2 font_card" style="color:white">Items</h3>
                 </v-col>
               </v-row>
             </v-card>
@@ -139,16 +146,18 @@
             </v-card>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="3">
-            <v-card height="100%" color="black" class="pa-3">
+            <v-card height="100%" color="green" class="pa-3">
               <v-row>
                 <v-col class="text-center" lg="12">
-                  <h3 class="ma-3 font_number" style="color:white"> {{ detailItem.length }}</h3>
+                  <h3 class="ma-3 font_number">{{
+                    this.detailItem.reduce((acc, item) => acc + item.qtyready, 0)
+                  }}</h3>
                 </v-col>
               </v-row>
-              <v-divider :thickness="3" color="white"></v-divider>
+              <v-divider :thickness="2"></v-divider>
               <v-row>
                 <v-col class="text-center" lg="12">
-                  <h3 class="ma-2 font_card" style="color:white">Items</h3>
+                  <h3 class="ma-2 font_card">Done</h3>
                 </v-col>
               </v-row>
             </v-card>
@@ -280,11 +289,6 @@ export default {
       status: "",
     };
   },
-  setup() {
-    const format = '12 hours'
-    const time = useTime(format)
-    return { time, }
-  },
 
   created() {
     this.getSalesOrder();
@@ -294,6 +298,7 @@ export default {
 
   methods: {
     ...mapMutations("sales_order", ["SET_SALES_ORDER"]),
+
     async update() {
       this.loading = true;
       this.detail = this.detail.map((item) => {
@@ -393,24 +398,6 @@ export default {
       this.detail[index].balance = this.detail[index].qty - this.detail[index].qtyready;
     },
 
-    hitungTotalWaktu(waktuDiaOrder) {
-      this.totalWaktu = 'Loading...'
-      const [jamDiberikan, menitDiberikan, detikDiberikan] = waktuDiaOrder.split(':');
-      const waktuDiberikanObj = new Date();
-      waktuDiberikanObj.setHours(jamDiberikan);
-      waktuDiberikanObj.setMinutes(menitDiberikan);
-      waktuDiberikanObj.setSeconds(detikDiberikan);
-
-      setInterval(() => {
-        const waktuSekarang = new Date();
-        const perbedaanWaktu = waktuSekarang - waktuDiberikanObj;
-        const detik = Math.floor(perbedaanWaktu / 1000) % 60 % 60 % 60 % 60;
-        const menit = Math.floor(perbedaanWaktu / (1000 * 60)) % 60;
-        const jam = Math.floor(perbedaanWaktu / (1000 * 60 * 60));
-        this.totalWaktu = `${jam}:${menit}:${detik}`;
-      }, 1000);
-    },
-
     countDownTimer() {
       setInterval(() => {
         this.getSalesOrder()
@@ -418,10 +405,10 @@ export default {
     },
   },
 
-
   computed: {
     ...mapGetters("sales_order", ["SalesOrder"]),
     ...mapGetters("auth", ["User"]),
+
   },
   components: {
     MainLayout,

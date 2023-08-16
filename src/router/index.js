@@ -10,7 +10,7 @@ const routes = [
     path: '/home',
     name: 'home',
     meta: {
-      title: 'Home',
+      title: 'Checker',
       icon: 'mdi-account',
       visible: true,
     },

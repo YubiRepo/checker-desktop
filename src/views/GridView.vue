@@ -20,28 +20,18 @@
                             v-if="GridSalesOrder.Dine_In != 'Not Found'" :key="indexHeader">
                             <v-card variant="outlined">
                                 <v-row>
-                                    <v-col cols="2">
+                                    <v-col cols="3">
                                         <v-card-title style="font-size:18px;">{{ items.tblname }}</v-card-title>
                                     </v-col>
-                                    <v-col cols="2">
-                                        <v-card-title style="font-size:15px;" v-if="items.tblkey != 0">Dine
-                                            In</v-card-title>
-                                        <v-card-title style="font-size:15px;" v-else>Take
-                                            Away</v-card-title>
-                                    </v-col>
-                                    <v-col cols="2">
+                                    <v-col cols="3">
                                         <v-card-title style="font-size:15px;">Order No. {{ items.salesseq }}</v-card-title>
                                     </v-col>
-                                    <v-col cols="2">
-                                        <v-card-title style="font-size:15px;"><v-chip color="black">{{ items.ConfirmTime
-                                        }}</v-chip></v-card-title>
-                                    </v-col>
-                                    <v-col cols="2">
+                                    <v-col cols="3">
                                         <v-card-title style="font-size:15px;"><v-chip color="warning">{{ items.statusorder
                                         }}</v-chip></v-card-title>
                                     </v-col>
-                                    <v-col cols="2">
-                                        <v-card-title><v-btn color="error" variant="outlined"
+                                    <v-col cols="3">
+                                        <v-card-title><v-btn color="error" variant="outlined" class="float-end"
                                                 @click.stop="update(indexHeader)">Update</v-btn></v-card-title>
                                     </v-col>
                                 </v-row>
@@ -158,21 +148,14 @@
                                         <v-card-title style="font-size:20px;">Take
                                             Away</v-card-title>
                                     </v-col>
-                                    <v-col cols="2">
+                                    <v-col cols="3">
                                         <v-card-title style="font-size:15px;">Order No. {{ items.salesseq }}</v-card-title>
                                     </v-col>
-                                    <v-col cols="2">
-                                        <v-card-title style="font-size:15px;"><v-chip color="black">{{ items.ConfirmTime
-                                        }}</v-chip></v-card-title>
-                                    </v-col>
-                                    <v-col cols="1">
-                                        <v-card-title style="font-size:15px;"></v-card-title>
-                                    </v-col>
-                                    <v-col cols="2">
+                                    <v-col cols="3">
                                         <v-card-title style="font-size:15px;"><v-chip color="warning">{{ items.statusorder
                                         }}</v-chip></v-card-title>
                                     </v-col>
-                                    <v-col cols="2">
+                                    <v-col cols="3">
                                         <v-card-title class="float-end"><v-btn color="error" variant="outlined"
                                                 @click.stop="update(indexHeader, 'Take_Away')">Update</v-btn></v-card-title>
                                     </v-col>
