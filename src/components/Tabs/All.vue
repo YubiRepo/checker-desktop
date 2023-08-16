@@ -85,14 +85,10 @@
     <v-dialog v-model="dialog" v-if="dialog" hide-overlay width="1300" persist>
       <v-card>
         <v-row no-gutter>
-          <!-- <v-col xs="12" sm="12" md="4" lg="4">
-            <v-card-title class="font_card" v-if="this.status != 'complete'">
-            </v-card-title>
-          </v-col> -->
           <v-col xs="12" sm="12" md="4" lg="4" class="text-left">
             <v-card-title class="font_card">
               <h3>
-                {{ this.header.tblname ?? 'Dine In' }}
+                {{ this.header.tblname ?? 'Take Away' }}
               </h3>
             </v-card-title>
           </v-col>
