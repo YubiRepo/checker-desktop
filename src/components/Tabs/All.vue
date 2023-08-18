@@ -304,7 +304,7 @@ export default {
           qtyready: item.qtyready,
         };
       });
-      const res = await fetch("http://192.168.1.250:8081/apporder/api/updatecheckerall", {
+      const res = await fetch(`${import.meta.env.VITE_APP_API_URL}/apporder/api/updatecheckerall`, {
         method: "POST",
         body: JSON.stringify({ "detailorder": this.detail }),
       })
@@ -319,9 +319,10 @@ export default {
     async getSalesOrder() {
       this.loading = true;
       await $axios
-        .get("http://192.168.1.250:8081/apporder/api/allOrder", {
+        .get("/apporder/api/allOrder", {
         })
         .then(({ data }) => {
+          console.log(data)
           this.SET_SALES_ORDER(data);
           this.loading = false;
         });
@@ -332,7 +333,7 @@ export default {
       this.loading = true;
       this.dialog = true;
       await $axios
-        .get("http://192.168.1.250:8081/apporder/api/allOrderid/" + salesseq, {
+        .get("/apporder/api/allOrderid/" + salesseq, {
         })
         .then(({ data }) => {
           this.header = data.Order[0];
@@ -348,13 +349,6 @@ export default {
             item.qtyready = item.qtyready;
           });
           this.loading = false;
-          if (this.dialog == true) {
-            this.totalWaktu = "Loading..."
-            this.hitungTotalWaktu(data.Order[0].ConfirmTime);
-          } else {
-            this.totalWaktu = "Loading..."
-            this.dialog = false;
-          }
         });
     },
 
