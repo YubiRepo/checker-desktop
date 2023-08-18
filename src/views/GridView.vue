@@ -354,7 +354,7 @@ export default {
                     qtyready: item.qtyready,
                 };
             });
-            const res = await fetch("/apporder/api/updatecheckerall", {
+            const res = await fetch(`${import.meta.env.VITE_APP_API_URL}/apporder/api/updatecheckerall`, {
                 method: "POST",
                 body: JSON.stringify({ "detailorder": body }),
             })
