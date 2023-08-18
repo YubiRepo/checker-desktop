@@ -140,7 +140,7 @@ export default {
         async getSalesOrder() {
             this.loading = true;
             await $axios
-                .get("http://192.168.1.250:8081/apporder/api/allOrder", {
+                .get("/apporder/api/allOrder", {
                 })
                 .then(({ data }) => {
                     if (data.Dine_In != "Not Found") {
