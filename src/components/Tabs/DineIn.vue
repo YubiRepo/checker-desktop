@@ -3,7 +3,8 @@
     <v-main>
       <v-responsive>
         <v-row class="mt-3">
-          <v-col v-for="row in SalesOrder.Dine_In" cols="2" :key="row.id" v-if="SalesOrder.Dine_In != 'Not Found'">
+          <v-col v-for="row in SalesOrder.Dine_In" lg="2" md="4" sm="4" :key="row.id"
+            v-if="SalesOrder.Dine_In != 'Not Found'">
             <v-card height="100%" :color="row.statusorder == 'complete' ? 'green' : 'yellow'" class="pa-3"
               @click="getSalesOrderDetail(row.salesseq)">
               <v-row class="flex mx-auto">

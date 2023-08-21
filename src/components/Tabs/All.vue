@@ -9,12 +9,12 @@
         </v-row>
         <v-form ref="form_data">
           <v-row class="mt-3">
-            <v-col v-for="(row, index) in SalesOrder.Dine_In" cols="2" :key="row.id"
+            <v-col lg="2" md="4" sm="4" v-for="(row, index) in SalesOrder.Dine_In" :key="row.id"
               v-if="SalesOrder.Dine_In != 'Not Found'">
               <v-card height="100%" :color="row.statusorder == 'complete' ? 'green' : 'yellow'" class="pa-3"
                 @click="getSalesOrderDetail(row.salesseq)">
                 <v-row class="flex mx-auto">
-                  <v-col class="text-center" lg="12">
+                  <v-col class="text-center" lg="12" md="12" sm="12">
                     <h2 class="ma-2">{{ row.tblname ?? 'Dine In' }}</h2>
                   </v-col>
                 </v-row>
@@ -50,11 +50,12 @@
         </v-row>
         <v-form ref="form_data">
           <v-row class="mt-3">
-            <v-col v-for="row in SalesOrder.Take_Away" cols="2" :key="row.id" v-if="SalesOrder.Take_Away != 'Not Found'">
+            <v-col lg="2" md="4" sm="4" v-for="row in SalesOrder.Take_Away" :key="row.id"
+              v-if="SalesOrder.Take_Away != 'Not Found'">
               <v-card height="100%" :color="row.statusorder == 'complete' ? 'green' : 'yellow'" class="pa-3"
                 @click="getSalesOrderDetail(row.salesseq)">
                 <v-row class="flex mx-auto">
-                  <v-col class="text-center" lg="12">
+                  <v-col class="text-center" lg="12" md="12" sm="12">
                     <h2 class="ma-2">{{ 'Take Away' }} ({{ row.salesseq }})</h2>
                   </v-col>
                 </v-row>
