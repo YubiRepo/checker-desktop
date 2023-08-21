@@ -15,7 +15,7 @@
                 @click="getSalesOrderDetail(row.salesseq)">
                 <v-row class="flex mx-auto">
                   <v-col class="text-center" lg="12">
-                    <h2 class="ma-2 font_card">{{ row.tblname ?? 'Dine In' }}</h2>
+                    <h2 class="ma-2">{{ row.tblname ?? 'Dine In' }}</h2>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -55,7 +55,7 @@
                 @click="getSalesOrderDetail(row.salesseq)">
                 <v-row class="flex mx-auto">
                   <v-col class="text-center" lg="12">
-                    <h3 class="ma-2 font_card">{{ 'Take Away' }} ({{ row.salesseq }})</h3>
+                    <h2 class="ma-2">{{ 'Take Away' }} ({{ row.salesseq }})</h2>
                   </v-col>
                 </v-row>
                 <v-row>
