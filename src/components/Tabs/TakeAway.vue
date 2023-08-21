@@ -56,7 +56,7 @@
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-center">
             <v-card-title class="font_card">
-              Summary
+              <h2 class="ma-2">Order No. {{ header.salesseq }}</h2>
             </v-card-title>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-right">

@@ -31,7 +31,13 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col class="text-center" lg="12">
+                  <v-col lg="4">
+                    <h3>
+                      <v-icon icon="mdi-account" size="large"></v-icon>
+                      <span class="ma-2">{{ row.person }}</span>
+                    </h3>
+                  </v-col>
+                  <v-col lg="8" class="text-end">
                     <h3 class="ma-2">Order No. {{ row.salesseq }}
                     </h3>
                   </v-col>
@@ -87,11 +93,16 @@
       <v-card>
         <v-row no-gutter>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-left">
+            <v-card-title class="font_card">
+              <h3>
+                <span class="ma-2">{{ this.header.person }}</span> Persons
+              </h3>
+            </v-card-title>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-center">
             <v-card-title class="font_card">
               <h3>
-                {{ this.header.tblname ?? 'Take Away' }}
+                Take Away
               </h3>
             </v-card-title>
           </v-col>
