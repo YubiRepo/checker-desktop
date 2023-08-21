@@ -49,7 +49,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-dialog v-model="dialog" v-if="dialog" hide-overlay width="60%">
+    <v-dialog v-model="dialog" v-if="dialog" hide-overlay width="1300">
       <v-card>
         <v-row no-gutter>
           <v-col xs="12" sm="12" md="4" lg="4">
