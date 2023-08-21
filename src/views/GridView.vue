@@ -27,8 +27,9 @@
                                         <v-card-title style="font-size:15px;">Order No. {{ items.salesseq }}</v-card-title>
                                     </v-col>
                                     <v-col cols="3">
-                                        <v-card-title style="font-size:15px;"><v-chip color="warning">{{ items.statusorder
-                                        }}</v-chip></v-card-title>
+                                        <v-card-title style="font-size:15px;">
+                                            {{ items.person }} Persons
+                                        </v-card-title>
                                     </v-col>
                                     <v-col cols="3">
                                         <v-card-title><v-btn color="error" variant="outlined" class="float-end"
