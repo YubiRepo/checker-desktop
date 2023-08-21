@@ -102,7 +102,7 @@
           <v-col xs="12" sm="12" md="4" lg="4" class="text-center">
             <v-card-title class="font_card">
               <h3>
-                Take Away
+                {{ this.header.tblname ?? 'Dine In' }}
               </h3>
             </v-card-title>
           </v-col>
