@@ -266,7 +266,7 @@
           </v-row>
           <v-divider></v-divider>
           <br />
-          <v-btn :disabled="loading" color="primary" variant="flat" class="float-end" @click.stop="update">Update Sales
+          <v-btn color="primary" variant="flat" class="float-end" @click.stop="update">Update Sales
             Order</v-btn>
         </v-card-text>
       </v-card>
