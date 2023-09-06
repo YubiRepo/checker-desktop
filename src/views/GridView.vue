@@ -117,18 +117,20 @@
                                                     </td>
                                                     <td class="text-center" v-if="item.qty == item.qtyready"
                                                         style="background-color: #C8E6C9;">
-                                                        <v-chip class="ma-2" v-if="item.qty == item.qtyready">
+                                                        <v-chip class="ma-2" v-if="item.qty == item.qtyready" color="white"
+                                                            style="background-color: green;">
                                                             DONE
                                                         </v-chip>
-                                                        <v-chip class="ma-2" v-else>
+                                                        <v-chip class="ma-2" v-else style="background-color: yellow;">
                                                             NOT DONE
                                                         </v-chip>
                                                     </td>
                                                     <td class="text-center" v-else>
-                                                        <v-chip class="ma-2" v-if="item.qty == item.qtyready">
+                                                        <v-chip class="ma-2" v-if="item.qty == item.qtyready" color="white"
+                                                            style="background-color: green;">
                                                             DONE
                                                         </v-chip>
-                                                        <v-chip class="ma-2" v-else>
+                                                        <v-chip class="ma-2" v-else style="background-color: yellow;">
                                                             NOT DONE
                                                         </v-chip>
                                                     </td>

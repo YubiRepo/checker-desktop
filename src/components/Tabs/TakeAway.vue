@@ -49,14 +49,21 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-dialog v-model="dialog" v-if="dialog" hide-overlay width="1300">
+    <v-dialog v-model="dialog" v-if="dialog" hide-overlay width="1300" persist>
       <v-card>
         <v-row no-gutter>
-          <v-col xs="12" sm="12" md="4" lg="4">
+          <v-col xs="12" sm="12" md="4" lg="4" class="text-left">
+            <v-card-title class="font_card">
+              <h3>
+                <span class="ma-2">{{ this.header.person }}</span> Persons
+              </h3>
+            </v-card-title>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-center">
             <v-card-title class="font_card">
-              <h2 class="ma-2">Order No. {{ header.salesseq }}</h2>
+              <h3>
+                {{ this.header.tblname ?? 'Dine In' }}
+              </h3>
             </v-card-title>
           </v-col>
           <v-col xs="12" sm="12" md="4" lg="4" class="text-right">
@@ -68,12 +75,14 @@
             </v-card-actions>
           </v-col>
         </v-row>
+        <v-divider :thickness="2"></v-divider>
+        <br>
         <v-row no-gutter style="justify-content: center;">
           <v-col xs="12" sm="12" md="4" lg="3">
             <v-card height="100%" color="black" class="pa-3">
               <v-row>
                 <v-col class="text-center" lg="12">
-                  <h3 class="ma-3 font_number" style="color:white"> {{ detail.length }}</h3>
+                  <h3 class="ma-3 font_number" style="color:white"> {{ detailItem.length }}</h3>
                 </v-col>
               </v-row>
               <v-divider :thickness="3" color="white"></v-divider>
@@ -106,7 +115,8 @@
               <v-row>
                 <v-col class="text-center" lg="12">
                   <h3 class="ma-3 font_number">{{
-                    this.detailItem.reduce((acc, item) => acc + item.qty, 0) - this.detailItem.reduce((acc, item) => acc +
+                    this.detailItem.reduce((acc, item) => acc + item.qty, 0) - this.detailItem.reduce((acc, item) => acc
+                      +
                       item.qtyready, 0)
                   }}</h3>
                 </v-col>
@@ -125,7 +135,7 @@
         <v-card-text>
           <v-row>
             <v-col cols="12">
-              <v-table>
+              <v-table class="table">
                 <thead style="background-color:#4B81FF">
                   <tr>
                     <th style="color: white">#</th>
@@ -143,16 +153,18 @@
                       1 }}
                     </td>
                     <td v-else>{{ index + 1 }}</td>
-                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">{{ items.menuname }}</td>
+                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">{{
+                      items.menuname }}</td>
                     <td v-else>{{ items.menuname }}</td>
-                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">{{ items.qty }}
+                    <td class="text-center" v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">{{
+                      items.qty }}
                     </td>
-                    <td v-else>{{ items.qty }}</td>
-                    <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
+                    <td v-else class="text-center">{{ items.qty }}</td>
+                    <td class="text-center" v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
                       <div class="d-flex align-left flex-column pa-6">
                         <v-btn-toggle>
                           <v-btn type="button" icon="mdi-minus" @click="reduceQuantity(index)"></v-btn>
-                          <v-text-field type="number" v-model="items.qtyready"
+                          <v-text-field class="centered-input text--darken-3" type="number" v-model="items.qtyready"
                             @change="calculateQty(index)"></v-text-field>
                           <v-btn type="button" icon="mdi-plus" @click="addQuantity(index)"></v-btn>
                           <v-btn type="button" variant="flat" style="background-color:#BBDEFB;"
@@ -164,10 +176,10 @@
                       <div class="d-flex align-left flex-column pa-6">
                         <v-btn-toggle>
                           <v-btn type="button" icon="mdi-minus" @click="reduceQuantity(index)"></v-btn>
-                          <v-text-field type="text" v-model="items.qtyready" v-if="items.qty == items.qtyready"
+                          <v-text-field type="text" class="centered-input text--darken-3" v-model="items.qtyready"
+                            v-if="items.qty == items.qtyready" @change="calculateQty(index)" readonly></v-text-field>
+                          <v-text-field class="centered-input text--darken-3" type="text" v-model="items.qtyready" v-else
                             @change="calculateQty(index)" readonly></v-text-field>
-                          <v-text-field type="text" v-model="items.qtyready" v-else @change="calculateQty(index)"
-                            readonly></v-text-field>
                           <v-btn type="button" icon="mdi-plus" @click="addQuantity(index)"></v-btn>
                           <v-btn type="button" variant="flat" style="background-color:#BBDEFB;"
                             @click="check(index)"><v-icon>mdi-check-outline</v-icon></v-btn>
@@ -177,22 +189,25 @@
                     <td v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
                       <div class="d-flex align-left flex-column pa-6">
                         <v-btn-toggle>
-                          <v-text-field type="number" v-model="items.balance" readonly></v-text-field>
+                          <v-text-field type="number" v-model="items.balance" class="centered-input text--darken-3 mt-3"
+                            readonly></v-text-field>
                         </v-btn-toggle>
                       </div>
                     </td>
                     <td v-else>
                       <div class="d-flex align-left flex-column pa-6">
                         <v-btn-toggle>
-                          <v-text-field type="number" v-model="items.balance" readonly></v-text-field>
+                          <v-text-field type="number" v-model="items.balance" class="centered-input text--darken-3"
+                            readonly></v-text-field>
                         </v-btn-toggle>
                       </div>
                     </td>
                     <td class="text-center" v-if="items.qty == items.qtyready" style="background-color: #C8E6C9;">
-                      <v-chip class="ma-2" v-if="items.qty == items.qtyready">
+                      <v-chip class="ma-2" v-if="items.qty == items.qtyready" color="white"
+                        style="background-color: green;">
                         DONE
                       </v-chip>
-                      <v-chip class="ma-2" v-else>
+                      <v-chip class="ma-2" v-else color="yellow">
                         NOT DONE
                       </v-chip>
                     </td>
@@ -200,7 +215,7 @@
                       <v-chip class="ma-2" v-if="items.qty == items.qtyready">
                         DONE
                       </v-chip>
-                      <v-chip class="ma-2" v-else>
+                      <v-chip class="ma-2" v-else color="black" style="background-color: yellow;">
                         NOT DONE
                       </v-chip>
                     </td>
